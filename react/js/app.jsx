@@ -4,6 +4,10 @@ import React from 'react/addons';
 
 import TodoModel from './todoModel';
 
+import TodoItem from './todoItem.jsx';
+
+import TodoFooter from './footer.jsx';
+
 var app = app || {};
 app.ALL_TODOS = 'all';
 app.ACTIVE_TODOS = 'active';
@@ -14,7 +18,7 @@ var ENTER_KEY = 13;
 var TodoApp = React.createClass({
 	getInitialState: function () {
 		return {
-			nowShowing: app.ALL_TODOS,
+			nowShowing: 'all',
 			editing: null,
 			newTodo: ''
 		};
@@ -43,6 +47,42 @@ var TodoApp = React.createClass({
 		var footer;
 		var main;
 		var todos = this.props.model.todos;
+
+		var todoItems = todos.map(function (todo) {
+			return (
+				<TodoItem 
+					key={todo.id}
+					todo={todo}
+				/>
+			);
+		}, this);
+
+		var activeTodoCount = todos.reduce(function (accum, todo) {
+			return todo.completed ? accum : accum + 1;
+		}, 0);
+
+		var completedCount = todos.length - activeTodoCount;
+
+		if(todos.length) {
+			main = (
+				<section className="main">
+					<input
+						className="toggle-all"
+						type="checkbox"
+					/>
+					<ul className="todo-list">
+						{todoItems}
+					</ul>
+				</section>
+			);
+
+			footer = 
+				<TodoFooter
+					count={activeTodoCount}
+					completedCount={completedCount}
+					nowShowing={this.state.nowShowing}
+				/>;
+		}
 
 		return (
 			<div>
