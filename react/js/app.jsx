@@ -2,16 +2,13 @@
 
 import React from 'react/addons';
 
+import {Router} from 'director';
+
 import TodoModel from './todoModel';
 
 import TodoItem from './todoItem.jsx';
 
 import TodoFooter from './footer.jsx';
-
-var app = app || {};
-app.ALL_TODOS = 'all';
-app.ACTIVE_TODOS = 'active';
-app.COMPLETED_TODOS = 'completed';
 
 var ENTER_KEY = 13;
 
@@ -22,6 +19,16 @@ var TodoApp = React.createClass({
 			editing: null,
 			newTodo: ''
 		};
+	},
+
+	componentDidMount: function (){
+		var setState = this.setState;
+		var router = Router({
+			'/': setState.bind(this, {nowShowing: 'all'}),
+			'/active': setState.bind(this, {nowShowing: 'active'}),
+			'/completed': setState.bind(this, {nowShowing: 'completed'})
+		});
+		router.init('/');
 	},
 
 	handleChange: function(event) {
@@ -43,16 +50,63 @@ var TodoApp = React.createClass({
 		}
 	},
 
+	toggleAll: function (event) {
+		var checked = event.target.checked;
+		this.props.model.toggleAll(checked);
+	},
+
+	toggle: function(todoToToggle) {
+		this.props.model.toggle(todoToToggle);
+	},
+
+	destroy: function (todo) {
+		this.props.model.destroy(todo);
+	},
+
+	edit: function (todo) {
+		this.setState({editing: todo.id});
+	},
+
+	save: function (todoToSave, text) {
+		this.props.model.save(todoToSave, text);
+		this.setState({editing: null});
+	},
+
+	cancel: function () {
+		this.setState({editing: null});
+	},
+
+	clearCompleted: function() {
+		this.props.model.clearCompleted();
+	},
+
 	render: function () {
 		var footer;
 		var main;
 		var todos = this.props.model.todos;
 
-		var todoItems = todos.map(function (todo) {
+		var shownTodos = todos.filter(function (todo){
+			switch (this.state.nowShowing) {
+				case 'active':
+					return !todo.completed;
+				case 'completed':
+					return todo.completed;
+				default:
+					return true;
+			}
+		}, this);
+
+		var todoItems = shownTodos.map(function (todo) {
 			return (
 				<TodoItem 
 					key={todo.id}
 					todo={todo}
+					onToggle={this.toggle.bind(this, todo)}
+					onDestroy={this.destroy.bind(this, todo)}
+					onEdit={this.edit.bind(this, todo)}
+					editing={this.state.editing === todo.id}
+					onSave={this.save.bind(this, todo)}
+					onCancel={this.cancel}
 				/>
 			);
 		}, this);
@@ -69,6 +123,8 @@ var TodoApp = React.createClass({
 					<input
 						className="toggle-all"
 						type="checkbox"
+						onChange={this.toggleAll}
+						checked={activeTodoCount === 0}
 					/>
 					<ul className="todo-list">
 						{todoItems}
@@ -81,6 +137,7 @@ var TodoApp = React.createClass({
 					count={activeTodoCount}
 					completedCount={completedCount}
 					nowShowing={this.state.nowShowing}
+					onClearCompleted={this.clearCompleted}
 				/>;
 		}
 
@@ -98,6 +155,7 @@ var TodoApp = React.createClass({
 					/>
 				</header>
 				{main}
+				{footer}
 			</div>
 		);
 	}
@@ -111,4 +169,6 @@ function render() {
 		document.getElementsByClassName('todoapp')[0]
 	);
 }
+
+model.subscribe(render);
 render();
