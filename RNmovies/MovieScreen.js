@@ -9,32 +9,36 @@ import React, {
   View,
 } from 'react-native';
 
+import getImageSource from './getImageSource';
+import getStyleFromScore from './getStyleFromScore';
+import getTextFromScore from './getTextFromScore';
+
 var MovieScreen = React.createClass({
   render() {
-    var content = <ListView />;
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.mainSection}>
           <Image
+            source={getImageSource(this.props.movie, 'det')}
             style={styles.detailsImage}
           />
           <View style={styles.rightPane}>
-            <Text style={styles.movieTitle}>the movie title</Text>
-            <Text>1989.09.03</Text>
+            <Text style={styles.movieTitle}>{this.props.movie.title}</Text>
+            <Text>{this.props.movie.year}</Text>
             <View style={styles.mpaaWrapper}>
               <Text style={styles.mpaaText}>
-                rating
+                {this.props.movie.mpaa_rating}
               </Text>
             </View>
-            <Ratings />
+            <Ratings ratings={this.props.movie.ratings} />
           </View>
         </View>
         <View style={styles.separator} />
         <Text>
-          synopsis
+          {this.props.movie.synopsis}
         </Text>
         <View style={styles.separator} />
-        <Cast />
+        <Cast actors={this.props.movie.abridged_cast} />
       </ScrollView>
     )
   }
@@ -42,16 +46,20 @@ var MovieScreen = React.createClass({
 
 var Ratings = React.createClass({
   render: function() {
+    var criticsScore = this.props.ratings.critics_score;
+    var audienceScore = this.props.ratings.audience_score;
     return (
       <View>
         <View style={styles.rating}>
           <Text style={styles.ratingTitle}>Critics:</Text>
-          <Text>
+          <Text style={[styles.ratingValue, getStyleFromScore(criticsScore)]}>
+            {getTextFromScore(criticsScore)}
           </Text>
         </View>
         <View style={styles.rating}>
           <Text style={styles.ratingTitle}>Audience:</Text>
-          <Text>
+          <Text style={[styles.ratingValue, getStyleFromScore(audienceScore)]}>
+            {getTextFromScore(audienceScore)}
           </Text>
         </View>
       </View>
@@ -61,12 +69,18 @@ var Ratings = React.createClass({
 
 var Cast = React.createClass({
   render: function() {
+    if(!this.props.actors) {
+      return null;
+    }
+
     return (
       <View>
         <Text style={styles.castTitle}>Actors</Text>
-        <Text style={styles.castActor}>
-          movie actor
-        </Text>
+        {this.props.actors.map(actor => 
+          <Text key={actor.name} style={styles.castActor}>
+            &bull; {actor.name}
+          </Text>
+        )}
       </View>
     );
   },

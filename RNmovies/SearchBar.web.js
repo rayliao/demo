@@ -1,3 +1,7 @@
+/**
+ * @providesModule SearchBar
+ */
+
 'use strict';
 
 import React, {
@@ -14,10 +18,13 @@ var SearchBar = React.createClass({
         <TextInput
           autoCapitalize="none"
           autoCorrect={false}
+          onChange={this.props.onSearchChange}
           placeholder="Search a movie..."
+          onFocus={this.props.onFocus}
           style={styles.searchBarInput}
         />
         <ActivityIndicatorIOS
+          animating={this.props.isLoading}
           style={styles.spinner}
         />
       </View>

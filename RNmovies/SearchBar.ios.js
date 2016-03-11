@@ -1,3 +1,7 @@
+/**
+ * @providesModule SearchBar
+ */
+
 'use strict';
 
 import React, {
