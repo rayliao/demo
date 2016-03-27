@@ -9,7 +9,7 @@ import React, {
   StyleSheet,
 } from 'react-native';
 
-import SearchScreen from './SearchScreen';
+import SearchScreen from 'SearchScreen';
 
 class RNmovies extends React.Component {
   render() {

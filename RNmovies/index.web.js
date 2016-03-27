@@ -13,7 +13,7 @@ import React, {
 } from 'react-native';
 
 import MovieScreen from './MovieScreen';
-import SearchScreen from './SearchScreen';
+import SearchScreen from 'SearchScreen';
 
 var RouteMapper = function(route, navigationOperations, onComponentR) {
   if (route.name === 'search') {

@@ -1,3 +1,7 @@
+/**
+ * @providesModule SearchScreen
+ */
+
 'use strict';
 
 var React = require('react-native');
@@ -12,10 +16,8 @@ var {
 } = React;
 var TimerMixin = require('react-timer-mixin');
 
-var fetch = Platform.OS === 'web'? require('ReactJsonp'): require('ReactFetch');
-
 var invariant = require('fbjs/lib/invariant');
-var dismissKeyboard = require('ReactDismissKeyboard');
+// var dismissKeyboard = require('dismisskeyboard');
 
 var MovieCell = require('./MovieCell');
 var MovieScreen = require('./MovieScreen');
@@ -218,7 +220,7 @@ var SearchScreen = React.createClass({
         passProps: {movie},
       });
     } else {
-      dismissKeyboard();
+      // dismissKeyboard();
       this.props.navigator.push({
         title: movie.title,
         name: 'movie',
