@@ -1,0 +1,18 @@
+{
+  "name": "weather",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "devDependencies": {
+    "connect": "^3.4.1",
+    "connect-livereload": "^0.5.4",
+    "gulp": "^3.9.1",
+    "gulp-livereload": "^3.8.1",
+    "opn": "^4.0.1",
+    "serve-static": "^1.10.2"
+  }
+}
