@@ -1,2 +1,2 @@
 'use strict';
-module.exports = bu => 'Hello ${bu}';
+module.exports = () => 'Hello Tmall';
