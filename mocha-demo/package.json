@@ -6,10 +6,19 @@
     "type": "git",
     "url": ""
   },
+  "scripts": {
+    "test": "./node_modules/.bin/_mocha --require should",
+    "mp": "./node_modules/.bin/mocha-phantomjs",
+    "cov": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --delay"
+  },
   "author": "RayLiao",
   "license": "MIT",
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-istanbul": "^0.10.4",
+    "istanbul": "^0.4.3",
     "mocha": "^2.4.5",
+    "mocha-phantomjs": "^4.0.2",
     "should": "^8.3.1"
   }
 }

@@ -1,2 +1,2 @@
 'use strict';
-module.exports = () => 'Hello Tmall';
+module.exports = bu => new Promise(resolve => resolve(`Hello ${bu}`));
