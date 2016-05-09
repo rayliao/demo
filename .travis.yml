@@ -2,7 +2,8 @@ language: node_js
 node_js:
   - "4"
 script: "npm run test"
-after_script: "npm install coveralls && cat ./coverage/lcov.info | coveralls"
+after_success:
+  - npm run coveralls
 branches:
   only:
     - gh-pages

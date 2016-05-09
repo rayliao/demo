@@ -8,13 +8,16 @@
   },
   "scripts": {
     "test": "./node_modules/.bin/_mocha --require should",
-    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/"
+    "cover": "istanbul cover node_modules/mocha/bin/_mocha",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "author": "RayLiao",
   "license": "MIT",
   "devDependencies": {
+    "coveralls": "^2.11.6",
     "istanbul": "^0.4.3",
     "mocha": "^2.4.5",
+    "mocha-lcov-reporter": "^1.0.0",
     "should": "^8.3.1"
   }
 }
