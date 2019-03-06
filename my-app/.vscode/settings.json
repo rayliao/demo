@@ -1,0 +1,5 @@
+{
+  "files.autoSave": "onFocusChange",
+  "tslint.enable": true,
+  "tslint.autoFixOnSave": true
+}
