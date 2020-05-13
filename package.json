@@ -1,23 +1,15 @@
 {
-  "name": "demo",
-  "version": "1.0.0",
-  "description": "",
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
+  "name": "learn-starter",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "./node_modules/.bin/_mocha --require should",
-    "cover": "istanbul cover node_modules/mocha/bin/_mocha",
-    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
-  "author": "RayLiao",
-  "license": "MIT",
-  "devDependencies": {
-    "coveralls": "^2.11.6",
-    "istanbul": "^0.4.3",
-    "mocha": "^2.4.5",
-    "mocha-lcov-reporter": "^1.0.0",
-    "should": "^8.3.1"
+  "dependencies": {
+    "next": "9.3.5",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
   }
 }
